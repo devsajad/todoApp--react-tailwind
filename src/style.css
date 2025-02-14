@@ -1,0 +1,104 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Primary color */
+  --color-primary: hsl(220, 98%, 61%);
+
+  /* Light Theme Colors */
+  --color-light-very-light-gray: hsl(0, 0%, 98%);
+  --color-light-very-light-grayish-blue: hsl(236, 33%, 92%);
+  --color-light-light-grayish-blue: hsl(233, 11%, 84%);
+  --color-light-dark-grayish-blue: hsl(236, 9%, 61%);
+  --color-light-very-dark-grayish-blue: hsl(235, 19%, 35%);
+
+  /* Dark Theme Colors */
+  --color-dark-very-dark-blue: hsl(235, 21%, 11%);
+  --color-dark-very-dark-desaturated-blue: hsl(235, 24%, 19%);
+  --color-dark-light-grayish-blue: hsl(234, 39%, 85%);
+  --color-dark-light-grayish-blue-hover: hsl(236, 33%, 92%);
+  --color-dark-dark-grayish-blue: hsl(234, 11%, 52%);
+  --color-dark-very-dark-grayish-blue: hsl(233, 14%, 35%);
+  --color-dark-very-dark-grayish-blue2: hsl(237, 14%, 26%);
+
+  /* Font family */
+  --font-sans: "Josefin Sans", sans-serif;
+
+  /* Break points */
+  --breakpoint-sm: 375px;
+}
+
+@layer base {
+  * {
+    @apply transition-all duration-300;
+  }
+  body {
+    @apply font-sans;
+  }
+  button {
+    @apply cursor-pointer;
+  }
+}
+
+@layer components {
+  .back-image {
+    @apply bg-[url("/bg-mobile-light.jpg")] bg-no-repeat bg-contain bg-top sm:bg-[url("/bg-desktop-light.jpg")];
+    @variant dark {
+      @apply bg-[url("/bg-mobile-dark.jpg")] sm:bg-[url("/bg-desktop-dark.jpg")];
+    }
+  }
+
+  .wrapper {
+    @apply w-dvw min-h-dvh bg-light-very-light-grayish-blue mx-auto;
+    @variant dark {
+      @apply bg-dark-very-dark-blue;
+    }
+  }
+
+  .list-container {
+    @apply bg-white py-3 px-6 flex items-center gap-2  border-b-1 border-light-very-light-gray;
+    @variant dark {
+      @apply bg-dark-very-dark-grayish-blue2 border-b-light-very-dark-grayish-blue;
+    }
+    @variant first {
+      @apply rounded-t-sm;
+    }
+  }
+
+  .list-done {
+    @apply line-through text-dark-light-grayish-blue;
+    @variant dark {
+      @apply text-dark-dark-grayish-blue;
+    }
+  }
+
+  .list-checkbox {
+    @apply cursor-pointer w-6 h-6 bg-white rounded-full border-1 border-gray-200;
+    @variant dark {
+      @apply dark:border-dark-dark-grayish-blue dark:bg-dark-very-dark-grayish-blue2;
+    }
+    -webkit-appearance: none;
+    @variant checked {
+      background: url(/icon-check.svg),
+        linear-gradient(to right, hsl(192, 100%, 67%), hsl(280, 87%, 65%));
+      background-repeat: no-repeat;
+      background-position: center;
+      border: none;
+    }
+  }
+
+  .list-text {
+    @apply text-light-very-dark-grayish-blue group-[.list-done]:text-dark-light-grayish-blue text-base;
+    @variant dark {
+      @apply text-dark-light-grayish-blue group-[.list-done]:text-dark-dark-grayish-blue;
+    }
+  }
+
+  .btn {
+    @apply hover:text-light-very-dark-grayish-blue dark:hover:text-dark-light-grayish-blue-hover;
+  }
+
+  .footer-text-style {
+    @apply dark:bg-dark-very-dark-grayish-blue2 dark:text-dark-dark-grayish-blue text-light-dark-grayish-blue bg-white;
+  }
+}
