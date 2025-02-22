@@ -14,8 +14,8 @@ if (savedMode === "true") {
 
 function App() {
   const [todoData, setTodoData] = useState(() => {
-    const savedData = localStorage.getItem("todoData");
-    if (savedData) return JSON.parse(savedData);
+    const savedData = JSON.parse(localStorage.getItem("todoData"));
+    return savedData || [];
   });
 
   const [showListOption, setShowListOption] = useState("all");
@@ -63,18 +63,20 @@ function App() {
 
         <AddNewTodo onAddTodoItem={handleAddTodoItem} />
 
-        <TodoList
-          todoData={handleShowListOption()}
-          onCheckList={handleCheckList}
-          onRemoveList={handleRemoveList}
-        />
-        {todoData.length > 0 && (
-          <Footer
-            todoData={todoData}
-            onClearCompleted={handleClearCompeted}
-            setShowListOption={setShowListOption}
-            showListOption={showListOption}
-          />
+        {todoData?.length > 0 && (
+          <>
+            <TodoList
+              todoData={handleShowListOption()}
+              onCheckList={handleCheckList}
+              onRemoveList={handleRemoveList}
+            />
+            <Footer
+              todoData={todoData}
+              onClearCompleted={handleClearCompeted}
+              setShowListOption={setShowListOption}
+              showListOption={showListOption}
+            />
+          </>
         )}
       </div>
     </div>
