@@ -1,16 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./header";
 import AddNewTodo from "./addNewTodo";
 import TodoList from "./todoList";
 import Footer from "./footer";
 
-const todos = [
-  { id: 1, text: "Jog around the park", completed: false },
-  { id: 2, text: "Watch React tutorial", completed: true },
-];
+// Apply dark mode class based on local storage before React renders to prevent Flash of Incorrect Theme
+const savedMode = localStorage.getItem("darkMode");
+if (savedMode === "true") {
+  document.documentElement.classList.add("dark");
+} else {
+  document.documentElement.classList.add("light");
+}
 
 function App() {
-  const [todoData, setTodoData] = useState(todos);
+  const [todoData, setTodoData] = useState(() => {
+    const savedData = localStorage.getItem("todoData");
+    if (savedData) return JSON.parse(savedData);
+  });
+
   const [showListOption, setShowListOption] = useState("all");
 
   function handleCheckList(id) {
@@ -43,6 +50,11 @@ function App() {
   function handleClearCompeted() {
     setTodoData((list) => list.filter((el) => !el.completed));
   }
+
+  // Effect to save data in local storage
+  useEffect(() => {
+    localStorage.setItem("todoData", JSON.stringify(todoData));
+  }, [todoData]);
 
   return (
     <div className="wrapper back-image">

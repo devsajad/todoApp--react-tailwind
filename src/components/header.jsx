@@ -1,16 +1,25 @@
 import React, { useEffect, useState } from "react";
 
+
 const Header = () => {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+    const savedMode = localStorage.getItem("darkMode");
+
+    return savedMode === "true" ? true : false;
+  });
 
   useEffect(() => {
     const htmlElement = document.documentElement;
     if (darkMode) {
       htmlElement.classList.add("dark");
       htmlElement.classList.remove("light");
+      // Save dark mode state in local storage
+      localStorage.setItem("darkMode", true);
     } else {
       htmlElement.classList.add("light");
       htmlElement.classList.remove("dark");
+      // Save dark mode state in local storage
+      localStorage.setItem("darkMode", false);
     }
   }, [darkMode]);
 
